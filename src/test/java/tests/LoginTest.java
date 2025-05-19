@@ -15,4 +15,48 @@ public class LoginTest extends BaseTest {
 
         assertEquals("https://www.saucedemo.com/inventory.html", driver.getCurrentUrl());
     }
+
+    @Test
+    public void testInvalidLogin() {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("standard_user", "invalid_password");
+
+        String expectedError = "Epic sadface: Username and password do not match any user in this service";
+        String actualError = loginPage.getErrorMessage();
+
+        assertEquals(expectedError, actualError);
+    }
+
+    @Test
+    public void testLockedOutLogin() {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("locked_out_user", "secret_sauce");
+
+        String expectedError = "Epic sadface: Sorry, this user has been locked out.";
+        String actualError = loginPage.getErrorMessage();
+
+        assertEquals(expectedError, actualError);
+    }
+
+    @Test
+    public void testEmptyUsername() {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("", "");
+
+        String expectedError = "Epic sadface: Username is required";
+        String actualError = loginPage.getErrorMessage();
+
+        assertEquals(expectedError, actualError);
+    }
+
+    @Test
+    public void testEmptyPassword() {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("standard_user", "");
+
+        String expectedError = "Epic sadface: Password is required";
+        String actualError = loginPage.getErrorMessage();
+
+        assertEquals(expectedError, actualError);
+    }
 }
