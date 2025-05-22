@@ -19,7 +19,7 @@ public class BaseTest {
         System.setProperty("webdriver.chrome.driver", "/usr/lib/chromium-browser/chromedriver");
 
         driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
+        // driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
     }
 
