@@ -94,5 +94,21 @@ public class InventoryTest extends BaseTest {
     public  void testPriceHightoLow() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("standard_user", "secret_sauce");
+
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        assertTrue(inventoryPage.isAtInventoryPage());
+
+        //Select filter Price - High to Low
+        inventoryPage.selectSortOption("Price (high to low)");
+
+        // Get product prices
+        List<Double> actualPrices = inventoryPage.getProductPrices();
+
+        //Create a sorted copy of the list for comparison
+        List<Double> expectedPrices =  new ArrayList<>(actualPrices);
+        expectedPrices.sort(Double::compareTo); //sort high to low
+        expectedPrices.sort(Comparator.reverseOrder());
+
+        assertEquals(expectedPrices, actualPrices, "Product prices should be sorted from high to low");
     }
 }

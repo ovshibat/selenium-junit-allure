@@ -10,9 +10,11 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void testValidLogin() {
+        //Go to Login Page
         LoginPage loginPage = new LoginPage(driver);
+        //type in correct username and password
         loginPage.login("standard_user", "secret_sauce");
-
+        //Verify that the user is on the inventory page
         assertEquals("https://www.saucedemo.com/inventory.html", driver.getCurrentUrl());
     }
 
