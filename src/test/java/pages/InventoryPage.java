@@ -7,7 +7,6 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class InventoryPage {
     private WebDriver driver;
@@ -17,6 +16,8 @@ public class InventoryPage {
     private By sortDropdown = By.className("product_sort_container");
     private By productNames = By.className("inventory_item_name");
     private By productPrices = By.className("inventory_item_price");
+    private By addToCartButtn = By.className("btn_inventory");
+    private By cartBadge = By.className("shopping_cart_badge");
 
     // Constructor to initialize WebDriver
     public InventoryPage(WebDriver driver) {
@@ -70,6 +71,45 @@ public class InventoryPage {
         }
 
         return prices;
+    }
+
+    public void addProductToCart(String productName) {
+        List<WebElement> products = driver.findElements(productItems);
+
+        for (int i = 0; i < products.size(); i++) {
+            WebElement product = products.get(i);
+            String name = product.findElement(productNames).getText();
+
+            if (name.equals(productName)) {
+                product.findElement(addToCartButtn).click();
+                break;
+            }
+        }
+    }
+
+    public int getCartItemCount() {
+        List<WebElement> cartCountItems = driver.findElements(cartBadge);
+
+        if (cartCountItems.isEmpty()) {
+            return 0;
+        } else {
+            String countText = cartCountItems.get(0).getText();
+            return Integer.parseInt(countText);
+        }
+    }
+
+    public void openProductDetails(String productName) {
+        List<WebElement> products = driver.findElements(By.className("inventory_item"));
+
+        for (int i = 0; i < products.size(); i++) {
+            WebElement product = products.get(i);
+            String name = product.findElement(By.className("inventory_item_name")).getText();
+
+            if (name.equalsIgnoreCase(productName)) {
+                product.findElement(By.className("inventory_item_name")).click();
+                break;
+            }
+        }
     }
 
 }

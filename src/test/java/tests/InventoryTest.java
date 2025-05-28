@@ -1,14 +1,12 @@
 package tests;
 
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebElement;
 import pages.InventoryPage;
 import pages.LoginPage;
 import utils.BaseTest;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -110,5 +108,28 @@ public class InventoryTest extends BaseTest {
         expectedPrices.sort(Comparator.reverseOrder());
 
         assertEquals(expectedPrices, actualPrices, "Product prices should be sorted from high to low");
+    }
+
+    @Test
+    public void testAddMultipleProductsToCart() {
+        loginAsStandardUser();
+
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        assertTrue(inventoryPage.isAtInventoryPage());
+
+        // List of products names to add
+        List<String> productsToAdd = Arrays.asList("Sauce Labs Backpack", "Sauce Labs Fleece Jacket", "Sauce Labs Onesie");
+
+        // For loop to add each product
+        for (int i = 0; i < productsToAdd.size(); i++) {
+            String product = productsToAdd.get(i);
+            inventoryPage.addProductToCart(product);
+        }
+
+        // Step 3: Assert cart count equals number of products added
+        int expectedCount = productsToAdd.size();
+        int actualCount = inventoryPage.getCartItemCount();
+
+        assertEquals(expectedCount, actualCount, "Cart count should match number of added items.");
     }
 }
