@@ -115,7 +115,7 @@ public class InventoryTest extends BaseTest {
         loginAsStandardUser();
 
         InventoryPage inventoryPage = new InventoryPage(driver);
-        assertTrue(inventoryPage.isAtInventoryPage());
+        assertTrue(inventoryPage.isAtInventoryPage(), "User should be on the Inventory page after login");
 
         // List of products names to add
         List<String> productsToAdd = Arrays.asList("Sauce Labs Backpack", "Sauce Labs Fleece Jacket", "Sauce Labs Onesie");
@@ -131,5 +131,25 @@ public class InventoryTest extends BaseTest {
         int actualCount = inventoryPage.getCartItemCount();
 
         assertEquals(expectedCount, actualCount, "Cart count should match number of added items.");
+    }
+
+    @Test
+    public void testRemoveItemFromCart() {
+        loginAsStandardUser();
+
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        assertTrue(inventoryPage.isAtInventoryPage(), "User should be on the Inventory page after login");
+
+        inventoryPage.addProductToCart("Sauce Labs Backpack");
+
+        assertEquals(1, inventoryPage.getCartItemCount(), "Cart items should be 1 after adding one product");
+
+        inventoryPage.addProductToCart("Sauce Labs Bike Light");
+
+        assertEquals(2, inventoryPage.getCartItemCount(), "Cart items should 2 after adding second product");
+
+        inventoryPage.removeProductFromCart("Sauce Labs Backpack");
+
+        assertEquals(1, inventoryPage.getCartItemCount(), "Cart count should be 1 after removing first item");
     }
 }

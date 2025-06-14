@@ -112,4 +112,47 @@ public class InventoryPage {
         }
     }
 
+    public boolean isAddToCartButtonVisible(String productName) {
+        List<WebElement> allProducts = driver.findElements(productItems); // get all products on the page
+
+        for (int i = 0; i < allProducts.size(); i++) {
+            WebElement currentProduct = allProducts.get(i);
+
+            String currentProductName = currentProduct.findElement(productNames).getText(); // get the name of this product
+
+            // Check if this is the product we're looking for
+            if (currentProductName.equals(productName)) {
+                List<WebElement> addToCartButtons = currentProduct.findElements(By.xpath(".//button[contains(@id, 'add-to-cart')]"));
+
+                // Check if we found any "Add to Cart" buttons
+                if (addToCartButtons.isEmpty()) {
+                    return false;
+                } else {
+                    WebElement addToCartButton = addToCartButtons.get(0);
+                    return addToCartButton.isDisplayed();
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void removeProductFromCart(String productName) {
+        List<WebElement> products = driver.findElements(productItems);
+
+        for (int i = 0; i < products.size(); i++) {
+            WebElement product = products.get(i);
+            String name = product.findElement(productNames).getText();
+
+            if (name.equals(productName)) {
+                // Look for the remove button within this product
+                List<WebElement> removeButtons = product.findElements(By.xpath(".//button[contains(@id, 'remove')]"));
+                if (!removeButtons.isEmpty()) {
+                    removeButtons.get(0).click();
+                    break;
+                }
+            }
+        }
+    }
+
 }
