@@ -151,5 +151,9 @@ public class InventoryTest extends BaseTest {
         inventoryPage.removeProductFromCart("Sauce Labs Backpack");
 
         assertEquals(1, inventoryPage.getCartItemCount(), "Cart count should be 1 after removing first item");
+
+        inventoryPage.removeProductFromCart("Sauce Labs Bike Light");
+
+        assertEquals(0, inventoryPage.getCartItemCount(), "Cart should be empty after removing all items");
     }
 }
