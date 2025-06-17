@@ -146,11 +146,11 @@ public class InventoryTest extends BaseTest {
 
         inventoryPage.addProductToCart("Sauce Labs Bike Light");
 
-        assertEquals(2, inventoryPage.getCartItemCount(), "Cart items should 2 after adding second product");
+        assertEquals(2, inventoryPage.getCartItemCount(), "Cart items should be 2 after adding the second product");
 
         inventoryPage.removeProductFromCart("Sauce Labs Backpack");
 
-        assertEquals(1, inventoryPage.getCartItemCount(), "Cart count should be 1 after removing first item");
+        assertEquals(1, inventoryPage.getCartItemCount(), "Cart count should be 1 after removing the first item");
 
         inventoryPage.removeProductFromCart("Sauce Labs Bike Light");
 
