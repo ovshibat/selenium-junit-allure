@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CartTest extends BaseTest {
 
@@ -52,19 +53,35 @@ public class CartTest extends BaseTest {
         productsToAdd.add("Sauce Labs Bike Light");
         productsToAdd.add("Sauce Labs Bolt T-Shirt");
 
-        for (int i=0; i < productsToAdd.size(); i++) {
+        for (int i = 0; i < productsToAdd.size(); i++) {
             String productName = productsToAdd.get(i);
-
             inventoryPage.addProductToCart(productName);
         }
 
         // Click on cart and check the user is on the cart page
-        CartPage cartPage = inventoryPage.clickCartIcon();
-        cartPage.isAtCartPage();
+        inventoryPage.clickCartIcon();
 
+        CartPage cartPage = new CartPage(driver);
+        assertTrue(cartPage.isOnCartPage(), "The user is on the cart page");
 
         // Verify the added items are in the cart page
+        List<String> cartItems = cartPage.getCartItemNames();
+        for (int i = 0; i < productsToAdd.size(); i++) {
+            String expectedProduct = productsToAdd.get(i);
+            assertTrue(cartItems.contains(expectedProduct), "Product not found in cart: " + expectedProduct);
+        }
 
         // Check item details are correct
+        for (int i = 0; i < productsToAdd.size(); i++) {
+            String productName = productsToAdd.get(i);
+            assertTrue(cartPage.isItemDisplayedInCart(productName), "Product should be displayed in cart: " + productName);
+            assertFalse(cartPage.getItemPrice(productName).isEmpty(), "Product should have a price displayed: " + productName);
+        }
+
+        // Verify that the item prices are not empty
+        for (int i = 0; i < productsToAdd.size(); i++) {
+            String productName = productsToAdd.get(i);
+            assertTrue(!cartPage.getItemPrice(productName).isEmpty(), "Item price missing for: " + productName);
+        }
     }
 }

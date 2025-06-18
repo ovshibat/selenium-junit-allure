@@ -156,7 +156,7 @@ public class InventoryPage {
         }
     }
 
-    // The user clicks on cart icon to navigate to cart page
+    // Click on cart icon to navigate to cart page
     public void clickCartIcon() {
         WebElement cartIconElement = driver.findElement(cartIcon);
         cartIconElement.click();
