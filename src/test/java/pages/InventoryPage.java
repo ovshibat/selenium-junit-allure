@@ -18,6 +18,7 @@ public class InventoryPage {
     private By productPrices = By.className("inventory_item_price");
     private By addToCartButtn = By.className("btn_inventory");
     private By cartBadge = By.className("shopping_cart_badge");
+    private By cartIcon = By.className("shopping_cart_link");
 
     // Constructor to initialize WebDriver
     public InventoryPage(WebDriver driver) {
@@ -153,6 +154,12 @@ public class InventoryPage {
                 }
             }
         }
+    }
+
+    // The user clicks on cart icon to navigate to cart page
+    public void clickCartIcon() {
+        WebElement cartIconElement = driver.findElement(cartIcon);
+        cartIconElement.click();
     }
 
 }
