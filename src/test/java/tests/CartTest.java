@@ -60,7 +60,6 @@ public class CartTest extends BaseTest {
 
         // Click on cart and check the user is on the cart page
         inventoryPage.clickCartIcon();
-
         CartPage cartPage = new CartPage(driver);
         assertTrue(cartPage.isOnCartPage(), "The user is on the cart page");
 
@@ -83,5 +82,40 @@ public class CartTest extends BaseTest {
             String productName = productsToAdd.get(i);
             assertTrue(!cartPage.getItemPrice(productName).isEmpty(), "Item price missing for: " + productName);
         }
+    }
+
+    @Test
+    public void testEmptyCartValidation() {
+        loginAsStandardUser();
+
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        inventoryPage.clickCartIcon();
+
+        CartPage cartPage = new CartPage(driver);
+        assertTrue(cartPage.isOnCartPage(), "The user is on the cart page");
+        assertTrue(cartPage.isCartEmpty(), "The cart page is empty");
+
+        List<String> itemsInCart = cartPage.getCartItemNames();
+        assertEquals(0, itemsInCart.size(), "Cart doesn't contain any items");
+    }
+
+    @Test
+    public void testRemoveItemFromCart() {
+        loginAsStandardUser();
+
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        inventoryPage.addProductToCart("Sauce Labs Backpack");
+
+        inventoryPage.clickCartIcon();
+
+        CartPage cartPage = new CartPage(driver);
+        List<String> itemsInTheCart = cartPage.getCartItemNames();
+        assertEquals(1, itemsInTheCart.size(), "There should be one item");
+
+        cartPage.removeItemFromCart("Sauce Labs Backpack");
+
+        List<String> itemsAfterRemoval = cartPage.getCartItemNames();
+        assertEquals(0, itemsAfterRemoval.size(), "Cart is empty");
+        assertFalse(itemsAfterRemoval.contains("Sauce Labs Backpack"), "Cart should not contain the removed product");
     }
 }

@@ -85,6 +85,28 @@ public class CartPage {
         return "";
     }
 
+    public void removeItemFromCart(String productToRemove) {
+        // Get all cart items on the page and assign them to the List
+        List<WebElement> cartItemElements = driver.findElements(cartItems);
+
+        // Loop through each cart item
+        for (int i = 0; i < cartItemElements.size(); i++) {
+            WebElement cartItem = cartItemElements.get(i);
+            String itemName = cartItem.findElement(cartItemNames).getText();
+
+            //Check if this is the item I want to remove
+            if (itemName.equals(productToRemove)) {
+                WebElement removeButton = cartItem.findElement(By.xpath(".//button[contains(@id, 'remove')]"));
+
+                // click the remove button
+                removeButton.click();
+
+                // this stops the search for items and we removed the item
+                break;
+            }
+        }
+    }
+
 
 
 }
