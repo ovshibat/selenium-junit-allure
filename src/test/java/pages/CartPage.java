@@ -14,6 +14,7 @@ public class CartPage {
     private By cartItems = By.className("cart_item");
     private By cartItemNames = By.className("inventory_item_name");
     private By cartItemPrices = By.className("inventory_item_price");
+    private By continueShoppingButton = By.id("continue-shopping");
 
     // Constructor
     public CartPage(WebDriver driver) {
@@ -107,6 +108,9 @@ public class CartPage {
         }
     }
 
-
+    public void clickContinueShopping() {
+        WebElement ContinueShopping = driver.findElement(continueShoppingButton);
+        ContinueShopping.click();
+    };
 
 }

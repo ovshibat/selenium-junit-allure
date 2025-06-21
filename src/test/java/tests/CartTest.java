@@ -118,4 +118,28 @@ public class CartTest extends BaseTest {
         assertEquals(0, itemsAfterRemoval.size(), "Cart is empty");
         assertFalse(itemsAfterRemoval.contains("Sauce Labs Backpack"), "Cart should not contain the removed product");
     }
+
+    @Test
+    public void testContinueShoppingFromCart() {
+        // Step 1: Login and add item to cart
+        loginAsStandardUser();
+
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        inventoryPage.addProductToCart("Sauce Labs Backpack");
+
+        // Step 2: Navigate to cart page
+        inventoryPage.clickCartIcon();
+        CartPage cartPage = new CartPage(driver);
+
+        assertTrue(cartPage.isOnCartPage(), "The user is on Cart Page");
+        // Step 3: Click continue shopping
+        cartPage.clickContinueShopping();
+
+        // Step 4: Verify we're back on inventory page
+        assertTrue(inventoryPage.isAtInventoryPage(), "Yes, the user is back on the inventory page");
+
+        // Step 5: Verify cart still has the item (cart count should show 1)
+        assertEquals(1, inventoryPage.getCartItemCount(), "The cart still has the item");
+
+    }
 }
