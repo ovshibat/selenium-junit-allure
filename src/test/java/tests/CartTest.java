@@ -140,6 +140,33 @@ public class CartTest extends BaseTest {
 
         // Step 5: Verify cart still has the item (cart count should show 1)
         assertEquals(1, inventoryPage.getCartItemCount(), "The cart still has the item");
+    }
+
+    @Test
+    public void testCartItemDetails() {
+        // Step 1: Login and add item to cart
+        loginAsStandardUser();
+
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        String selectedProduct = "Sauce Labs Backpack";
+        inventoryPage.addProductToCart(selectedProduct);
+
+        // Step 2: Navigate to cart page
+        inventoryPage.clickCartIcon();
+
+        // Step 3: Verify item details in cart
+        CartPage cartPage = new CartPage(driver);
+        assertTrue(cartPage.isOnCartPage(), "Yes, the user is on cart page");
+
+        // Step 4: Verify all item details are present
+        assertTrue(cartPage.isItemDisplayedInCart(selectedProduct));
+        String itemPrice = cartPage.getItemPrice(selectedProduct);
+        assertFalse(itemPrice.isEmpty(), "The product has a price");
+
+        String itemDescription = cartPage.getItemDescription()
+
+
+        // Step 5: Verify quantity is correct
 
     }
 }
