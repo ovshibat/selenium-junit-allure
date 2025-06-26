@@ -163,10 +163,12 @@ public class CartTest extends BaseTest {
         String itemPrice = cartPage.getItemPrice(selectedProduct);
         assertFalse(itemPrice.isEmpty(), "The product has a price");
 
-        String itemDescription = cartPage.getItemDescription()
-
+        String itemDescription = cartPage.getItemDescription(selectedProduct);
+        assertFalse(itemDescription.isEmpty(), "item should have a description");
 
         // Step 5: Verify quantity is correct
+        int quantity = cartPage.getItemQuantity(selectedProduct);
+        assertEquals(1, quantity, " item quantity should be 1");
 
     }
 }
