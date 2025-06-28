@@ -171,4 +171,32 @@ public class CartTest extends BaseTest {
         assertEquals(1, quantity, " item quantity should be 1");
 
     }
+
+    @Test
+    public void testCartItemsMatchInventoryDetails() {
+        // Step 1: Login as standard user
+        loginAsStandardUser();
+
+        // Step 2: Get product details from inventory page
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        String selectedProduct = "Sauce Labs Backpack";
+
+        // Get price from inventory page
+        String productPrice = inventoryPage.getProductPrices()
+
+        // Step 3: Add product to cart
+        inventoryPage.addProductToCart(selectedProduct);
+
+        // Step 4: Navigate to cart page
+        inventoryPage.clickCartIcon();
+
+        CartPage cartPage = new CartPage(driver);
+        assertTrue(cartPage.isOnCartPage(), "The user is on Cart page");
+
+        // Step 5: Verify product details match between inventory and cart
+        assertFalse(cartPage.isCartEmpty(), "No, the cart is not empty");
+        assertTrue(cartPage.isItemDisplayedInCart(selectedProduct), "The selected product is displayed in the cart");
+
+    }
+
 }
