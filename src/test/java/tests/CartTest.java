@@ -182,7 +182,7 @@ public class CartTest extends BaseTest {
         String selectedProduct = "Sauce Labs Backpack";
 
         // Get price from inventory page
-        String productPrice = inventoryPage.getProductPrices()
+        String productPrice = inventoryPage.getProductPrice(selectedProduct);
 
         // Step 3: Add product to cart
         inventoryPage.addProductToCart(selectedProduct);
@@ -196,6 +196,8 @@ public class CartTest extends BaseTest {
         // Step 5: Verify product details match between inventory and cart
         assertFalse(cartPage.isCartEmpty(), "No, the cart is not empty");
         assertTrue(cartPage.isItemDisplayedInCart(selectedProduct), "The selected product is displayed in the cart");
+        String cartPrice = cartPage.getItemPrice(selectedProduct);
+        assertEquals(productPrice, cartPrice, "Cart price should match inventory price");
 
     }
 

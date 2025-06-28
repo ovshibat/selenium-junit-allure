@@ -74,6 +74,20 @@ public class InventoryPage {
         return prices;
     }
 
+    // Get the price string for a specific product
+    public String getProductPrice(String productName) {
+        List<WebElement> products = driver.findElements(productItems);
+
+        for (WebElement product : products) {
+            String name = product.findElement(productNames).getText();
+            if (name.equals(productName)) {
+                return product.findElement(productPrices).getText();
+            }
+        }
+
+        return "";
+    }
+
     public void addProductToCart(String productName) {
         List<WebElement> products = driver.findElements(productItems);
 
