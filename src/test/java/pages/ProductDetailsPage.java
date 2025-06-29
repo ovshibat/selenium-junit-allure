@@ -14,6 +14,7 @@ public class ProductDetailsPage {
     private By productDescription = By.className("inventory_details_desc");
     private By productPrice = By.className("inventory_details_price");
     private By cartIcon = By.className("shopping_cart_link");
+    private By cartBadge = By.className("shopping_cart_badge");
 
     public ProductDetailsPage(WebDriver driver) {
         this.driver = driver;
@@ -44,13 +45,12 @@ public class ProductDetailsPage {
     }
 
     public int getCartItemCount() {
-        List<WebElement> cartCountItems = driver.findElements(cartIcon);
+        List<WebElement> cartCountItems = driver.findElements(cartBadge);
 
-        if (cartCountItems.size() == 0) {
+        if (cartCountItems.isEmpty()) {
             return 0;
         } else {
             String countText = cartCountItems.get(0).getText();
-
             return Integer.parseInt(countText);
         }
     }
