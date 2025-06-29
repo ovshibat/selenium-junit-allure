@@ -13,10 +13,15 @@ public class ProductDetailsPage {
     private By productName = By.className("inventory_details_name");
     private By productDescription = By.className("inventory_details_desc");
     private By productPrice = By.className("inventory_details_price");
-    private By cartBadge = By.className("shopping_cart_badge");
+    private By cartIcon = By.className("shopping_cart_link");
 
     public ProductDetailsPage(WebDriver driver) {
         this.driver = driver;
+    }
+
+    public boolean isAtProductDetailsPage() {
+        String currentUrl = driver.getCurrentUrl();
+        return currentUrl.contains("inventory-item.html");
     }
 
     public String getProductName() {
@@ -39,7 +44,7 @@ public class ProductDetailsPage {
     }
 
     public int getCartItemCount() {
-        List<WebElement> cartCountItems = driver.findElements(cartBadge);
+        List<WebElement> cartCountItems = driver.findElements(cartIcon);
 
         if (cartCountItems.size() == 0) {
             return 0;
@@ -69,5 +74,10 @@ public class ProductDetailsPage {
         // Check if the first button is visible
         WebElement firstAddButton = addButtons.get(0);
         return firstAddButton.isDisplayed();
+    }
+
+    public void clickOnCartIcon() {
+        WebElement cartIconElement = driver.findElement(cartIcon);
+        cartIconElement.click();
     }
 }
