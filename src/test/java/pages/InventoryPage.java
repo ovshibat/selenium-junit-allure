@@ -19,6 +19,7 @@ public class InventoryPage {
     private By addToCartButtn = By.className("btn_inventory");
     private By cartBadge = By.className("shopping_cart_badge");
     private By cartIcon = By.className("shopping_cart_link");
+    private By productDescriptions = By.className("inventory_item_desc");
 
     // Constructor to initialize WebDriver
     public InventoryPage(WebDriver driver) {
@@ -56,6 +57,23 @@ public class InventoryPage {
         }
 
         return names;
+    }
+
+    // Method to get description of a specific product
+    public String getProductDescriptions(String productName) {
+        List<WebElement> products = driver.findElements(productItems);
+
+        for (int i = 0; i < products.size(); i++) {
+            WebElement product = products.get(i);
+            String name = product.findElement(productNames).getText();
+
+            if (name.equals(productName)) {
+                WebElement descriptionElement = product.findElement(productDescriptions);
+                return descriptionElement.getText();
+            }
+        }
+
+        return ""; // Return empty string if product not found
     }
 
     // Gets a list of all product prices (as doubles)

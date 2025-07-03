@@ -175,11 +175,20 @@ public class InventoryTest extends BaseTest {
             assertFalse(inventoryPage.containsProgrammingCode(productName), "Product name should not contain programming code: " + productName);
 
             // Check for basic readability
-            assertTrue(isReadableText(productName), "Product name should be readable text: " + productName);
+            assertTrue(inventoryPage.isReadableText(productName), "Product name should be readable text: " + productName);
         }
 
         // Step 4: Get all product descriptions and validate them
+        List<String> productDescriptions = inventoryPage.getProductDescriptions();
+
+        for (int i = 0; i < productDescriptions.size(); i++) {
+            String description = productDescriptions.get(i);
+            // Check for programming-related patterns in descriptions
+            assertFalse(inventoryPage.containsProgrammingCode(description), "Product description should not contain programming code: " + description);
 
             // Check for basic readability
+            assertTrue(inventoryPage.isReadableText(description), "Product description should be readable text: " + description);
+        }
+
     }
 }
