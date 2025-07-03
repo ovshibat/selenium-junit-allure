@@ -8,8 +8,7 @@ import utils.BaseTest;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InventoryTest extends BaseTest {
 
@@ -155,5 +154,32 @@ public class InventoryTest extends BaseTest {
         inventoryPage.removeProductFromCart("Sauce Labs Bike Light");
 
         assertEquals(0, inventoryPage.getCartItemCount(), "Cart should be empty after removing all items");
+    }
+
+    @Test
+    public void testProductTextsAreReadable() {
+        // Step 1: Login as standard user
+        loginAsStandardUser();
+
+        // Step 2: Initialize inventory page
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        assertTrue(inventoryPage.isAtInventoryPage(), "The user is at Inventory page");
+
+        // Step 3: Get all product names and validate them
+        List<String> productNames = inventoryPage.getProductNames();
+
+        for (int i=0; i < productNames.size(); i++) {
+            String productName = productNames.get(i);
+
+            // Check for programming-related patterns in product names
+            assertFalse(inventoryPage.containsProgrammingCode(productName), "Product name should not contain programming code: " + productName);
+
+            // Check for basic readability
+            assertTrue(isReadableText(productName), "Product name should be readable text: " + productName);
+        }
+
+        // Step 4: Get all product descriptions and validate them
+
+            // Check for basic readability
     }
 }

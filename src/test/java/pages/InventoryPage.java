@@ -177,4 +177,28 @@ public class InventoryPage {
         cartIconElement.click();
     }
 
+    public boolean containsProgrammingCode(String text) {
+        if (text.contains("()")) return true;
+        if (text.contains("{}")) return true;
+        if (text.contains("[]")) return true;
+        if (text.contains("=>")) return true;
+        if (text.contains("==")) return true;
+        if (text.contains("!=")) return true;
+        if (text.matches(".*\\.\\w+\\(.*")) return true;
+
+        return false;
+    }
+
+    // Helper method to check if text is readable (basic validation)
+    public boolean isReadableText(String text) {
+        // Text should not be empty
+        if (text == null || text.trim().isEmpty()) return false;
+
+        // Text should contain mostly letters and spaces
+        // Allow some special characters but not too many programming symbols
+        String allowedPattern = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -_.,!?()&";
+
+        return text.matches(allowedPattern);
+    }
+
 }
