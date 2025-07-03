@@ -59,7 +59,20 @@ public class InventoryPage {
         return names;
     }
 
-    // Method to get description of a specific product
+    // Get descriptions for all products on the page
+    public List<String> getProductDescriptions() {
+        List<WebElement> descriptionElements = driver.findElements(productDescriptions);
+        List<String> descriptions = new ArrayList<>();
+
+        for (int i = 0; i < descriptionElements.size(); i++) {
+            WebElement element = descriptionElements.get(i);
+            descriptions.add(element.getText());
+        }
+
+        return descriptions;
+    }
+
+    // Get description of a specific product by name
     public String getProductDescriptions(String productName) {
         List<WebElement> products = driver.findElements(productItems);
 
