@@ -191,4 +191,43 @@ public class InventoryTest extends BaseTest {
         }
 
     }
+
+    @Test
+    public void testResetAppStateRemovesCartItems() {
+        loginAsStandardUser();
+
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        assertTrue(inventoryPage.isAtInventoryPage(), "The user is on the Inventory page");
+
+        // add several products to the cart
+        List<String> productsToAdd = Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt");
+
+        for (int i = 0; i < productsToAdd.size(); i++) {
+            String product = productsToAdd.get(i);
+            inventoryPage.addProductToCart(product);
+        }
+
+        // verify items are in cart
+        assertEquals(3, inventoryPage.getCartItemCount(), "Cart has three items added");
+
+        for (int i = 0; i < productsToAdd.size(); i++) {
+            String product = productsToAdd.get(i);
+            assertTrue(inventoryPage.isRemoveButtonVisible(product), "Yes, remove button is visible for: " + product);
+            assertFalse(inventoryPage.isAddToCartButtonVisible(product), "Yes, add to cart button is not visible for: " + product);
+        }
+
+        inventoryPage.openHamburgerMenu();
+        inventoryPage.clickResetAppState();
+
+        // verify the cart is empty
+        assertEquals(0, inventoryPage.getCartItemCount(), "The cart is empty");
+
+        for (int i = 0; i < productsToAdd.size(); i++) {
+            String product = productsToAdd.get(i);
+
+            assertTrue(inventoryPage.isAddToCartButtonVisible(product), "The add to cart button is visible");
+            assertFalse(inventoryPage.isRemoveButtonVisible(product), "remove button should not be visible after reset");
+        }
+
+    }
 }

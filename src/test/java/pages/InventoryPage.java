@@ -20,6 +20,10 @@ public class InventoryPage {
     private By cartBadge = By.className("shopping_cart_badge");
     private By cartIcon = By.className("shopping_cart_link");
     private By productDescriptions = By.className("inventory_item_desc");
+    private By hamburgerMenuBttn = By.className("bm-burger-button");
+    private By resetAppState = By.id("reset_sidebar_link");
+    private By hamburgerMenuCloseButton = By.id("react-burger-cross-btn");
+
 
     // Constructor to initialize WebDriver
     public InventoryPage(WebDriver driver) {
@@ -168,6 +172,25 @@ public class InventoryPage {
         return false;
     }
 
+    public boolean isRemoveButtonVisible(String productName) {
+        // get all products on the page
+        List<WebElement> allProducts = driver.findElements(productItems);
+
+        for (int i=0; i < allProducts.size(); i++) {
+            WebElement currentProduct = allProducts.get(i);
+
+            String currentProductName = currentProduct.findElement(productNames).getText();
+
+            if (currentProductName.equals(productName)) {
+                List<WebElement> removeButtons = currentProduct.findElements(By.xpath(".//button[contains(@id, 'remove')]"));
+
+                // check if remove button is on the page && it it's visible
+                return !removeButtons.isEmpty() && removeButtons.get(0).isDisplayed();
+            }
+        }
+        return false;
+    }
+
     public void removeProductFromCart(String productName) {
         List<WebElement> products = driver.findElements(productItems);
 
@@ -214,6 +237,39 @@ public class InventoryPage {
         String allowedPattern = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -_.,!?()&";
 
         return text.matches(allowedPattern);
+    }
+
+    public void openHamburgerMenu() {
+        WebElement hamburgerMenuElement = driver.findElement(hamburgerMenuBttn);
+        hamburgerMenuElement.click();
+    }
+
+    public void clickResetAppState() {
+        WebElement clickResetAppState = driver.findElement(resetAppState);
+        clickResetAppState.click();
+
+        // Wait a moment for reset to complete
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        closeHamburgerMenu();
+    }
+
+    // Method to close hamburger menu
+    public void closeHamburgerMenu() {
+        try {
+            WebElement closeButton = driver.findElement(hamburgerMenuCloseButton);
+            closeButton.click();
+
+            // Wait for menu to close
+            Thread.sleep(500);
+        } catch (Exception e) {
+            // If close button not found or clickable, menu might already be closed
+            // This is not necessarily an error
+        }
     }
 
 }
