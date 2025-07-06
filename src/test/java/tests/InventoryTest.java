@@ -225,7 +225,7 @@ public class InventoryTest extends BaseTest {
         for (int i = 0; i < productsToAdd.size(); i++) {
             String product = productsToAdd.get(i);
 
-            assertTrue(inventoryPage.isAddToCartButtonVisible(product), "The add to cart button is visible");
+            assertTrue(inventoryPage.isAddToCartButtonVisible(product),"Add to cart button should be visible after reset for: " + product);
             assertFalse(inventoryPage.isRemoveButtonVisible(product), "remove button should not be visible after reset");
         }
 

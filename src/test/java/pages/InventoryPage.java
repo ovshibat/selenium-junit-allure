@@ -20,7 +20,7 @@ public class InventoryPage {
     private By cartBadge = By.className("shopping_cart_badge");
     private By cartIcon = By.className("shopping_cart_link");
     private By productDescriptions = By.className("inventory_item_desc");
-    private By hamburgerMenuBttn = By.className("bm-burger-button");
+    private By hamburgerMenuBttn = By.id("react-burger-menu-btn");
     private By resetAppState = By.id("reset_sidebar_link");
     private By hamburgerMenuCloseButton = By.id("react-burger-cross-btn");
 
