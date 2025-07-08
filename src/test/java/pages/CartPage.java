@@ -17,6 +17,8 @@ public class CartPage {
     private By continueShoppingButton = By.id("continue-shopping");
     private By cartItemDescriptions = By.className("inventory_item_desc");
     private By cartItemQuantities = By.className("cart_quantity");
+    private By hamburgerMenuBttn = By.id("react-burger-menu-btn");
+    private By resetAppState = By.id("reset_sidebar_link");
 
     // Constructor
     public CartPage(WebDriver driver) {
@@ -155,6 +157,16 @@ public class CartPage {
     public void clickContinueShopping() {
         WebElement ContinueShopping = driver.findElement(continueShoppingButton);
         ContinueShopping.click();
-    };
+    }
+
+    public void openHamburgerMenu() {
+        WebElement hamburgerMenuElement = driver.findElement(hamburgerMenuBttn);
+        hamburgerMenuElement.click();
+    }
+
+    public void clickOnResetStateButton() {
+        WebElement resetButtonElement = driver.findElement(resetAppState);
+        resetButtonElement.click();
+    }
 
 }

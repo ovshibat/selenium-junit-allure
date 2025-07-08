@@ -222,9 +222,16 @@ public class CartTest extends BaseTest {
         assertTrue(cartPage.isItemDisplayedInCart("Sauce Labs Bolt T-Shirt"));
         assertTrue(cartPage.isItemDisplayedInCart("Sauce Labs Onesie"));
         // Step 4: Reset app state from cart page
-
+        cartPage.openHamburgerMenu();
+        cartPage.clickOnResetStateButton();
         // Step 5: Verify cart is empty
+        assertTrue(cartPage.isCartEmpty(), "The cart should be emptied after reset");
         // Step 6: Go back to inventory and verify button states
+        driver.navigate().back();
+        assertTrue(inventoryPage.isAtInventoryPage(), "The user went back to Inventory page");
+        assertTrue(inventoryPage.isAddToCartButtonVisible("Sauce Labs Backpack"));
+        assertTrue(inventoryPage.isAddToCartButtonVisible("Sauce Labs Bolt T-Shirt"));
+        assertTrue(inventoryPage.isAddToCartButtonVisible("Sauce Labs Onesie"));
 
     }
 
