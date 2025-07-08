@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import utils.WaitHelper;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class ProductDetailsPage {
     public void addProductToCart() {
         List<WebElement> addButtons = driver.findElements(By.xpath("//button[contains(@id, 'add-to-cart')]"));
         if(addButtons.size() > 0) {
-            addButtons.get(0).click();
+            WaitHelper.waitForClickable(driver, addButtons.get(0)).click();
         }
     }
 
@@ -56,10 +57,9 @@ public class ProductDetailsPage {
     }
 
     public void removeProductFromCart() {
-        // Look for the remove button (ID changes based on product)
         List<WebElement> removeButtons = driver.findElements(By.xpath("//button[contains(@id, 'remove')]"));
         if (removeButtons.size() > 0) {
-            removeButtons.get(0).click();
+            WaitHelper.waitForClickable(driver, removeButtons.get(0)).click();
         }
     }
 
@@ -77,7 +77,6 @@ public class ProductDetailsPage {
     }
 
     public void clickOnCartIcon() {
-        WebElement cartIconElement = driver.findElement(cartIcon);
-        cartIconElement.click();
+        WaitHelper.waitForClickable(driver, cartIcon).click();
     }
 }

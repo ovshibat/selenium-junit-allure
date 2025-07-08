@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import utils.WaitHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +117,8 @@ public class InventoryPage {
             String name = product.findElement(productNames).getText();
 
             if (name.equals(productName)) {
-                product.findElement(addToCartButtn).click();
+                WebElement button = product.findElement(addToCartButtn);
+                WaitHelper.waitForClickable(driver, button).click();
                 break;
             }
         }
@@ -141,7 +143,8 @@ public class InventoryPage {
             String name = product.findElement(By.className("inventory_item_name")).getText();
 
             if (name.equalsIgnoreCase(productName)) {
-                product.findElement(By.className("inventory_item_name")).click();
+                WebElement nameElement = product.findElement(By.className("inventory_item_name"));
+                WaitHelper.waitForClickable(driver, nameElement).click();
                 break;
             }
         }
@@ -240,13 +243,12 @@ public class InventoryPage {
     }
 
     public void openHamburgerMenu() {
-        WebElement hamburgerMenuElement = driver.findElement(hamburgerMenuBttn);
-        hamburgerMenuElement.click();
+        WaitHelper.waitForClickable(driver, hamburgerMenuBttn).click();
     }
 
     public void clickResetAppState() {
-        WebElement clickResetAppState = driver.findElement(resetAppState);
-        clickResetAppState.click();
+        WebElement reset = WaitHelper.waitForClickable(driver, resetAppState);
+        reset.click();
 
         // Wait a moment for reset to complete
         try {

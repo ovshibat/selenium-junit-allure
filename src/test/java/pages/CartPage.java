@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import utils.WaitHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,18 +156,15 @@ public class CartPage {
     }
 
     public void clickContinueShopping() {
-        WebElement ContinueShopping = driver.findElement(continueShoppingButton);
-        ContinueShopping.click();
+        WaitHelper.waitForClickable(driver, continueShoppingButton).click();
     }
 
     public void openHamburgerMenu() {
-        WebElement hamburgerMenuElement = driver.findElement(hamburgerMenuBttn);
-        hamburgerMenuElement.click();
+        WaitHelper.waitForClickable(driver, hamburgerMenuBttn).click();
     }
 
     public void clickOnResetStateButton() {
-        WebElement resetButtonElement = driver.findElement(resetAppState);
-        resetButtonElement.click();
+        WaitHelper.waitForClickable(driver, resetAppState).click();
     }
 
 }

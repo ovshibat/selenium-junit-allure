@@ -3,7 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.events.WebDriverListener;
+import utils.WaitHelper;
 
 public class LoginPage {
     private WebDriver driver;
@@ -13,9 +13,9 @@ public class LoginPage {
     }
 
     public void login(String username, String password) {
-        WebElement usernameInput = driver.findElement(By.id("user-name"));
-        WebElement passwordInput = driver.findElement(By.id("password"));
-        WebElement loginBtn = driver.findElement(By.id("login-button"));
+        WebElement usernameInput = WaitHelper.waitForVisible(driver, By.id("user-name"));
+        WebElement passwordInput = WaitHelper.waitForVisible(driver, By.id("password"));
+        WebElement loginBtn = WaitHelper.waitForClickable(driver, By.id("login-button"));
 
         usernameInput.sendKeys(username);
         passwordInput.sendKeys(password);
