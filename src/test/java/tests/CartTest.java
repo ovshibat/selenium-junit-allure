@@ -201,4 +201,31 @@ public class CartTest extends BaseTest {
 
     }
 
+    @Test
+    public void testResetAppStateFromCartPage() {
+        // Step 1: Login and add items to cart
+        loginAsStandardUser();
+
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        List<String> productsToAdd = Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bolt T-Shirt", "Sauce Labs Onesie");
+
+        for (int i = 0; i < productsToAdd.size(); i++){
+            String product = productsToAdd.get(i);
+            inventoryPage.addProductToCart(product);
+        }
+        // Step 2: Navigate to cart page
+        CartPage cartPage = new CartPage(driver);
+        inventoryPage.clickCartIcon();
+        assertTrue(cartPage.isOnCartPage(), "yes, the user is on the Cart Page");
+        // Step 3: Verify items are in cart
+        assertTrue(cartPage.isItemDisplayedInCart("Sauce Labs Backpack"));
+        assertTrue(cartPage.isItemDisplayedInCart("Sauce Labs Bolt T-Shirt"));
+        assertTrue(cartPage.isItemDisplayedInCart("Sauce Labs Onesie"));
+        // Step 4: Reset app state from cart page
+
+        // Step 5: Verify cart is empty
+        // Step 6: Go back to inventory and verify button states
+
+    }
+
 }
