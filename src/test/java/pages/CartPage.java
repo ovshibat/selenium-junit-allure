@@ -19,6 +19,7 @@ public class CartPage {
     private By cartItemQuantities = By.className("cart_quantity");
     private By hamburgerMenuBttn = By.id("react-burger-menu-btn");
     private By resetAppState = By.id("reset_sidebar_link");
+    private By checkoutButton = By.id("checkout");
 
     // Constructor
     public CartPage(WebDriver driver) {
@@ -157,6 +158,11 @@ public class CartPage {
     public void clickContinueShopping() {
         WebElement ContinueShopping = driver.findElement(continueShoppingButton);
         ContinueShopping.click();
+    }
+
+    public void clickCheckout() {
+        WebElement checkoutBtn = driver.findElement(checkoutButton);
+        checkoutBtn.click();
     }
 
     public void openHamburgerMenu() {
