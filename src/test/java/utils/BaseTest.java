@@ -12,12 +12,16 @@ public class BaseTest {
 
     @BeforeEach
     public void setUp() {
-        // Explicitly tells Selenium to use Chromium
         ChromeOptions options = new ChromeOptions();
-        options.setBinary("/usr/bin/chromium-browser"); // or use `which chromium-browser` to get the correct path
 
-        // Optionally set the chromedriver location if not in PATH
-        System.setProperty("webdriver.chrome.driver", "/usr/lib/chromium-browser/chromedriver");
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("mac")) {
+            options.setBinary("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome");
+            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        } else if (os.contains("win")) {
+            options.setBinary("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
+            System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\ChromeDriver\\chromedriver.exe");
+        }
 
         driver = new ChromeDriver(options);
         // driver.manage().window().maximize();
