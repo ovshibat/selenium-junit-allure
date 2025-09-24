@@ -14,17 +14,16 @@ public class BaseTest {
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
 
-        String os = System.getProperty("os.name").toLowerCase();
-        if (os.contains("mac")) {
-            options.setBinary("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome");
-            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-        } else if (os.contains("win")) {
-            options.setBinary("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
-            System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\ChromeDriver\\chromedriver.exe");
-        }
+        // ❌ No hardcoded chromedriver path or Chrome binary.
+        // Selenium Manager (built into Selenium 4.6+) will resolve the driver.
+
+        // (Optional) Helpful flags; uncomment if you need them:
+        // options.addArguments("--start-maximized");              // Windows/Linux
+        // options.addArguments("--window-size=1440,900");         // macOS typical
+        // options.addArguments("--disable-gpu");                  // CI stability
+        // options.addArguments("--headless=new");                 // headless runs
 
         driver = new ChromeDriver(options);
-        // driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
     }
 
@@ -40,27 +39,10 @@ public class BaseTest {
         loginPage.login(username, password);
     }
 
-    public void loginAsStandardUser() {
-        loginAs(Users.STANDARD, Users.PASSWORD);
-    }
-
-    public void loginAsLockedOutUser() {
-        loginAs(Users.LOCKED_OUT, Users.PASSWORD);
-    }
-
-    public void loginAsProblemUser() {
-        loginAs(Users.PROBLEM, Users.PASSWORD);
-    }
-
-    public void loginAsPerformanceGlitchUser() {
-        loginAs(Users.PERFORMANCE, Users.PASSWORD);
-    }
-
-    public void loginAsErrorUser() {
-        loginAs(Users.ERROR, Users.PASSWORD);
-    }
-
-    public void loginAsVisualUser() {
-        loginAs(Users.VISUAL, Users.PASSWORD);
-    }
+    public void loginAsStandardUser() { loginAs(Users.STANDARD, Users.PASSWORD); }
+    public void loginAsLockedOutUser() { loginAs(Users.LOCKED_OUT, Users.PASSWORD); }
+    public void loginAsProblemUser() { loginAs(Users.PROBLEM, Users.PASSWORD); }
+    public void loginAsPerformanceGlitchUser() { loginAs(Users.PERFORMANCE, Users.PASSWORD); }
+    public void loginAsErrorUser() { loginAs(Users.ERROR, Users.PASSWORD); }
+    public void loginAsVisualUser() { loginAs(Users.VISUAL, Users.PASSWORD); }
 }
